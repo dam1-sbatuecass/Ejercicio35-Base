@@ -156,7 +156,22 @@ public class VentanaPrincipal {
 	 * @param j: posición horizontal de la celda.
 	 */
 	public void mostrarNumMinasAlrededor(int i , int j) {
-		//TODO
+		JLabel jlabel=new JLabel();
+		jlabel.setText(Integer.toString(juego.getMinasAlrededor(i, j)));
+		panelesJuego[i][j].removeAll();
+		
+		switch (Integer.parseInt(jlabel.getText())) {
+		case 0:
+			
+			break;
+
+		default:
+			break;
+		}
+		
+		
+		
+		panelesJuego[i][j].add(jlabel);
 	}
 	
 	
