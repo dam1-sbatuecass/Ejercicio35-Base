@@ -37,14 +37,13 @@ public class ControlJuego {
 	 */
 	public void inicializarPartida() {
 
-
 		Random rd = new Random();
 		int filas = rd.nextInt(LADO_TABLERO);
 		int columnas = rd.nextInt(LADO_TABLERO);
 
 		for (int i = 0; i < MINAS_INICIALES; i++) {// Mete las 20 minas en el tablero
-			if (tablero[filas][columnas] == 0) {//Si no hay nada en la posicion aleatoria...
-				tablero[filas][columnas] = MINA;//Meto una mina.
+			if (tablero[filas][columnas] == 0) {// Si no hay nada en la posicion aleatoria...
+				tablero[filas][columnas] = MINA;// Meto una mina.
 			} else {
 				filas = rd.nextInt(LADO_TABLERO);
 				columnas = rd.nextInt(LADO_TABLERO);
@@ -55,8 +54,8 @@ public class ControlJuego {
 
 		for (int i = 0; i < tablero.length; i++) {// Recorre el tablero.
 			for (int j = 0; j < tablero.length; j++) {
-				if (tablero[i][j]==MINA) {//Si hay una mina...
-					calculoMinasAdjuntas(i, j);//Sumo uno a todos los huecos adyacentes.
+				if (tablero[i][j] == MINA) {// Si hay una mina...
+					calculoMinasAdjuntas(i, j);// Sumo uno a todos los huecos adyacentes.
 				}
 			}
 		}
@@ -73,43 +72,24 @@ public class ControlJuego {
 	 * 
 	 * @param i:
 	 *            posición verticalmente de la casilla a rellenar
-	 * @param j:
-	 *            posición horizontalmente de la casilla a rellenar
-	 * @return : El número de minas que hay alrededor de la casilla [i][j]
+	 * 
+	 * @param j:posición
+	 *            horizontalmente de la casilla a rellenar
 	 **/
-	private int calculoMinasAdjuntas(int i, int j) {
-		int minas = 0;
+	private void calculoMinasAdjuntas(int i, int j) {
 
-		for (int filas = i - 1; filas <= i + 1; filas++) {
-			for (int columnas = j - 1; columnas <= j + 1; columnas++) {
-				try {
-					if (tablero[filas][columnas]==MINA) {//Si hay una mina no hago nada para no cargarmela 
-						
-					}else {//Si no hay mina, le sumo 1 a esa posicion.
-						tablero[filas][columnas]++;
-					}
+		for (int filas = Math.max(i - 1, 0); filas <= Math.min(i + 1, LADO_TABLERO-1); filas++) {
+			for (int columnas = Math.max(0, j - 1); columnas <= Math.min(j + 1, LADO_TABLERO-1); columnas++) {
+				if (tablero[filas][columnas] == MINA) {// Si hay una mina no hago nada para no cargarmela
 
-				} catch (Exception e) {
+				} else {// Si no hay mina, le sumo 1 a esa posicion.
+					tablero[filas][columnas]++;
 
 				}
 
 			}
 		}
 
-		// for (int filas = Math.max(minimoPosible, (i - 1)); filas <=
-		// Math.min((LADO_TABLERO-1), (i + 1)); filas++) {
-		// for (int columnas = Math.max(minimoPosible, (j - 1)); columnas <=
-		// Math.min((LADO_TABLERO-1), (i + 1)); columnas++) {
-		// if (tablero[filas][columnas] == MINA) {
-		// //Si es una mina no hace nada
-		// } else {
-		// //Si no es una mina le suma uno.
-		// tablero[filas][columnas]++;
-		// }
-		// }
-		// }
-
-		return minas;
 	}
 
 	/**
