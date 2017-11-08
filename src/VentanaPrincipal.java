@@ -2,9 +2,16 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -53,6 +60,7 @@ public class VentanaPrincipal {
 
 		// Inicializamos componentes
 		panelImagen = new JPanel();
+		panelImagen.add(insertarImagen());
 		panelEmpezar = new JPanel();
 		panelEmpezar.setLayout(new GridLayout(1, 1));
 		panelPuntuacion = new JPanel();
@@ -144,7 +152,19 @@ public class VentanaPrincipal {
 
 		}
 
-		// botonEmpezar.addActionListener(new ActionBotonGo(juego,this));
+		botonEmpezar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventana.setVisible(false);
+				ventana = new JFrame();
+				ventana.setBounds(100, 100, 700, 500);
+				ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				juego = new ControlJuego();
+				inicializar();
+			}
+		});
+
 	}
 
 	/**
@@ -185,6 +205,11 @@ public class VentanaPrincipal {
 	public void mostrarFinJuego(boolean porExplosion) {
 		if (porExplosion == true) {// Si ha explotado una mina
 			JOptionPane.showMessageDialog(null, "¡MECAGONDIOS, UNA MINA!");
+			for (int i = 0; i < botonesJuego.length; i++) {
+				for (int j = 0; j < botonesJuego[i].length; j++) {
+					botonesJuego[i][j].setEnabled(false);
+				}
+			}
 		} else {
 			JOptionPane.showMessageDialog(null, "¡ENORABUENA, HAS GANADO!");
 		}
@@ -196,7 +221,7 @@ public class VentanaPrincipal {
 	public void actualizarPuntuacion() {
 
 		int puntuacion = Integer.parseInt(pantallaPuntuacion.getText());// Meto en un entero la puntuacion actual
-		int puntuacionActualizada = puntuacion + 1;//Le sumo uno a la puntuacion.
+		int puntuacionActualizada = puntuacion + 1;// Le sumo uno a la puntuacion.
 
 		pantallaPuntuacion.setText(Integer.toString(puntuacionActualizada));// Lo pongo en la pantalla de puntuacion.
 
@@ -222,6 +247,23 @@ public class VentanaPrincipal {
 	public void setControlJuego(ControlJuego juego) {// ESTE MACTODO ME LO HE INVENTADO
 														// YO................................................................
 		this.juego = juego;
+	}
+
+	/*
+	 * Introduce una imagen en el jpanel
+	 */
+	public JLabel insertarImagen() {
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(new File("buscaminas.PNG"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		ImageIcon icon = new ImageIcon(img);
+		JLabel label=new JLabel(icon);
+		return label;
 	}
 
 	/**

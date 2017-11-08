@@ -35,8 +35,14 @@ public class ActionBoton implements ActionListener {
 			ventana.actualizarPuntuacion();// Suma uno a la puntuacion.
 			ventana.refrescarPantalla();// Refresca la pantalla para mostrarlo al usuario.
 
-			if (ventana.getJuego().esFinJuego()) {// Si se han alcanzado los 80 puntos,
+			if (ventana.getJuego().esFinJuego()==true) {// Si se han alcanzado los 80 puntos,
 				ventana.mostrarFinJuego(false);// Muestro el fin del juego con el mensaje de que ha ganado.
+				
+				for (int i = 0; i < ventana.botonesJuego.length; i++) {
+					for (int j = 0; j < ventana.botonesJuego[i].length; j++) {
+						ventana.botonesJuego[i][j].setEnabled(false);//Desactivo todas los botones que quedan.
+					}
+				}
 			}
 
 		} else {

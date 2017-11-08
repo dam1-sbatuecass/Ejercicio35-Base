@@ -103,9 +103,10 @@ public class ControlJuego {
 	 * @return : Verdadero si no ha explotado una mina. Falso en caso contrario.
 	 */
 	public boolean abrirCasilla(int i, int j) {
-		if (tablero[i][j] == MINA) {
+		if (tablero[i][j] == MINA) {// Si ha pulsado una mina return false.
 			return false;
 		}
+		puntuacion++;// Si no ha pulsado una mina, sumo uno a la puntuacion y retorno true.
 		return true;
 
 	}
@@ -118,7 +119,7 @@ public class ControlJuego {
 	 *         minas.
 	 **/
 	public boolean esFinJuego() {
-		if (puntuacion == 80) {
+		if (puntuacion == (100 - MINAS_INICIALES)) {//Si se cumple, ha descubierto todas las casillas posibles.
 			return true;
 		}
 		return false;
@@ -129,14 +130,13 @@ public class ControlJuego {
 	 * para depurar
 	 */
 	public void depurarTablero() {
-		System.out.println("---------TABLERO--------------");
+		System.out.println("\n---------TABLERO--------------");
 		for (int i = 0; i < tablero.length; i++) {
 			for (int j = 0; j < tablero[i].length; j++) {
 				System.out.print(tablero[i][j] + "\t");
 			}
-			System.out.println();
+			System.out.println("");
 		}
-		System.out.println("\nPuntuación: " + puntuacion);
 	}
 
 	/**
