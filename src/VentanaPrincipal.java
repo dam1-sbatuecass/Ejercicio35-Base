@@ -60,7 +60,7 @@ public class VentanaPrincipal {
 
 		// Inicializamos componentes
 		panelImagen = new JPanel();
-		panelImagen.add(insertarImagen());
+		panelImagen.setLayout(new GridLayout(1, 1));
 		panelEmpezar = new JPanel();
 		panelEmpezar.setLayout(new GridLayout(1, 1));
 		panelPuntuacion = new JPanel();
@@ -86,7 +86,10 @@ public class VentanaPrincipal {
 		settings.gridy = 0;
 		settings.weightx = 1;
 		settings.weighty = 1;
+		settings.ipadx = 0;
+		settings.ipady = 0;
 		settings.fill = GridBagConstraints.BOTH;
+		panelImagen.add(insertarImagen("buscaminas.png"));
 		ventana.add(panelImagen, settings);
 		// VERDE
 		settings = new GridBagConstraints();
@@ -164,7 +167,6 @@ public class VentanaPrincipal {
 				inicializar();
 			}
 		});
-
 	}
 
 	/**
@@ -181,8 +183,14 @@ public class VentanaPrincipal {
 	 *            posición horizontal de la celda.
 	 */
 	public void mostrarNumMinasAlrededor(int i, int j) {
-		JLabel jlabel = new JLabel();
-		jlabel.setText(Integer.toString(juego.getMinasAlrededor(i, j)));
+		JLabel jlabel = new JLabel(Integer.toString(juego.getMinasAlrededor(i, j)), SwingConstants.CENTER);// Le asigno
+																											// el numero
+																											// de minas
+																											// colindantes
+																											// que hay y
+																											// lo
+																											// alineao
+																											// al centro
 		panelesJuego[i][j].removeAll();
 
 		jlabel.setForeground(correspondenciaColores[Integer.parseInt(jlabel.getText())]);// Le aplico al numero el color
@@ -244,25 +252,22 @@ public class VentanaPrincipal {
 		return juego;
 	}
 
-	public void setControlJuego(ControlJuego juego) {// ESTE MACTODO ME LO HE INVENTADO
-														// YO................................................................
-		this.juego = juego;
-	}
-
-	/*
-	 * Introduce una imagen en el jpanel
+	
+	/**
+	 * @return Un jlabel con la imagen.
 	 */
-	public JLabel insertarImagen() {
-		BufferedImage img = null;
+	public JLabel insertarImagen(String ruta) {
+		BufferedImage imgBuffer = null;
 		try {
-			img = ImageIO.read(new File("buscaminas.PNG"));
+			imgBuffer = ImageIO.read(new File(ruta));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		ImageIcon icon = new ImageIcon(img);
-		JLabel label=new JLabel(icon);
+		ImageIcon icon = new ImageIcon(imgBuffer.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+		JLabel label = new JLabel(icon);
+
 		return label;
 	}
 
